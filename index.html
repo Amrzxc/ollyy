@@ -72,7 +72,7 @@ src="https://www.facebook.com/tr?id=777658019038270&ev=PageView&noscript=1"
     #fbox-display {
         background: #eaeaea;
         border: 5px solid #828282;
-        width: 320px;
+        width: 300px;
         height: 230px;
         position: absolute;
         top: 32%;
@@ -141,7 +141,7 @@ src="https://www.facebook.com/tr?id=777658019038270&ev=PageView&noscript=1"
 <script type='text/javascript'>
     jQuery(document).ready(function($){
         if($.cookie('popup_facebook_box') != 'yes'){
-            $('#fbox-background').delay(10).fadeIn('medium');
+            $('#fbox-background').delay(60000).fadeIn('medium');
             $('#fbox-button, #fbox-close').click(function(){
                 $('#fbox-background').stop().fadeOut('medium');
             });
