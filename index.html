@@ -53,83 +53,75 @@ src="https://www.facebook.com/tr?id=777658019038270&ev=PageView&noscript=1"
 <!-- Facebook Popup Widget START -->
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js' type='text/javascript'></script>
 <style>
-    #fanback {
-        display:none;
-        background:rgba(0,0,0,0.8);
-        width:100%;
-        height:100%;
-        position:fixed;
-        top:0;
-        left:0;
-        z-index:99999;
+    #fbox-background {
+        display: none;
+        background: rgba(0,0,0,0.8);
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 99999;
     }
-    #fan-exit {
-        width:100%;
-        height:100%;
+
+    #fbox-close {
+        width: 100%;
+        height: 100%;
     }
-    #Burptech {
-        background:white;
-        width:420px;
-        height:270px;
-        position:absolute;
-        top:58%;
-        left:63%;
-        margin:-220px 0 0 -375px;
-        -webkit-box-shadow: inset 0 0 50px 0 #939393;
-        -moz-box-shadow: inset 0 0 50px 0 #939393;
-        box-shadow: inset 0 0 50px 0 #939393;
+
+    #fbox-display {
+        background: #eaeaea;
+        border: 5px solid #828282;
+        width: 340px;
+        height: 230px;
+        position: absolute;
+        top: 32%;
+        left: 37%;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
-        margin: -220px 0 0 -375px;
     }
-    #Burp {
-        float:right;
-        cursor:pointer;
-        background:url(http://3.bp.blogspot.com/-NRmqfyLwBHY/T4nwHOrPSzI/AAAAAAAAAdQ/8b9O7O1q3c8/s1600/Burp.png) repeat;
-        height:15px;
-        padding:20px;
-        position:relative;
-        padding-right:40px;
-        margin-top:-20px;
-        margin-right:-22px;
+
+    #fbox-button {
+        float: right;
+        cursor: pointer;
+        position: absolute;
+        right: 0px;
+        top: 0px;
     }
-    .remove-borda {
-        height:1px;
-        width:366px;
-        margin:0 auto;
-        background:#F3F3F3;
-        margin-top:16px;
-        position:relative;
-        margin-left:20px;
+
+    #fbox-button:before {
+        content: "CLOSE";
+        padding: 5px 8px;
+        background: #828282;
+        color: #eaeaea;
+        font-weight: bold;
+        font-size: 10px;
+        font-family: Tahoma;
     }
-    #linkit,#linkit a.visited,#linkit a,#linkit a:hover {
-        color:#80808B;
-        font-size:10px;
-        margin: 0 auto 5px auto;
-        float:center;
+
+    #fbox-link,#fbox-link a.visited,#fbox-link a,#fbox-link a:hover {
+        color: #aaaaaa;
+        font-size: 9px;
+        text-decoration: none;
+        text-align: center;
+        padding: 5px;
     }
 </style>
-
 <script type='text/javascript'>
     //<![CDATA[
     jQuery.cookie = function (key, value, options) {
-
 // key and at least value given, set cookie...
         if (arguments.length > 1 && String(value) !== "[object Object]") {
             options = jQuery.extend({}, options);
-
             if (value === null || value === undefined) {
                 options.expires = -1;
             }
-
             if (typeof options.expires === 'number') {
                 var days = options.expires, t = options.expires = new Date();
                 t.setDate(t.getDate() + days);
             }
-
             value = String(value);
-
             return (document.cookie = [
                 encodeURIComponent(key), '=',
                 options.raw ? value : encodeURIComponent(value),
@@ -139,7 +131,6 @@ src="https://www.facebook.com/tr?id=777658019038270&ev=PageView&noscript=1"
                 options.secure ? '; secure' : ''
             ].join(''));
         }
-
 // key and possibly options given, get cookie...
         options = value || {};
         var result, decode = options.raw ? function (s) { return s; } : decodeURIComponent;
@@ -149,29 +140,25 @@ src="https://www.facebook.com/tr?id=777658019038270&ev=PageView&noscript=1"
 </script>
 <script type='text/javascript'>
     jQuery(document).ready(function($){
-        if($.cookie('popup_user_login') != 'yes'){
-            $('#fanback').delay(60000).fadeIn('medium');
-            $('#Burp, #fan-exit').click(function(){
-                $('#fanback').stop().fadeOut('medium');
+        if($.cookie('popup_facebook_box') != 'yes'){
+            $('#fbox-background').delay(50000).fadeIn('medium');
+            $('#fbox-button, #fbox-close').click(function(){
+                $('#fbox-background').stop().fadeOut('medium');
             });
         }
-
+        $.cookie('popup_facebook_box', 'yes', { path: '/', expires: 7 });
     });
 </script>
-
-<div id='fanback'>
-    <div id='fan-exit'>
+<div id='fbox-background'>
+    <div id='fbox-close'>
     </div>
-    <div id='Burptech'>
-        <div id='Burp'>
-        </div>
-        <div class='remove-borda'>
+    <div id='fbox-display'>
+        <div id='fbox-button'>
         </div>
         <iframe allowtransparency='true' frameborder='0' scrolling='no' src='//www.facebook.com/plugins/likebox.php?
-
-href=http://www.facebook.com/2ollyy&width=402&height=255&colorscheme=light&show_faces=true&show_border=false&stream=false&header=false'
-
-                style='border: none; overflow: hidden; margin-top: -19px; width: 402px; height: 230px;'></iframe>
+href=https://www.facebook.com/pages/2ollyy/286370411694722&width=402&height=255&colorscheme=light&show_faces=true&show_border=false&stream=false&header=false'
+                style='border: none; overflow: hidden; background: #fff; width: 339px; height: 200px;'></iframe>
+        <div id="fbox-link">Powered by <a style="padding-left: 0px;" href="http://2olly.com" rel="nofollow">2olly</a></div>
     </div>
 </div>
 <!-- Facebook Popup Widget END.  -->
