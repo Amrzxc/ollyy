@@ -1,0 +1,508 @@
+<!doctype html>
+<html ng-app="CalApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Amr Emad">
+  <meta name="description" content="وفر فلوسك وقارن بين شركات التسوق الان واعرف اقل سعر تقدر تجيب اي منتج من برة"/>
+	<meta name="keywords" content="amazon,shop and ship,edfa3ly,lynks,2olly,shopping,online shopping in Egypt,customs,comparing" />
+	<meta property="og:locale" content="en_US" />
+  <meta property="og:title"  content="قولي بكام ؟" />    
+	<meta property="article:author" content="https://www.facebook.com/Amr.Genius"/>
+	<meta property="article:publisher" content="https://www.facebook.com/2ollyy"/>
+	<meta property="og:url" content="http://2olly.com/bkam/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="2olly" />
+  <meta property="fb:app_id" content="1764870977093866" />
+	<meta property="og:description" content="وفر فلوسك وقارن بين شركات التسوق الان واعرف اقل سعر تقدر تجيب اي منتج من برة "/>
+	<meta property="og:image" content="kam.png" />
+
+
+  <link rel="shortcut icon" href="favicon.ico">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/droid-arabic-kufi" type="text/css"/>
+    <title> قولي بكام وفر فلوسك وقارن بين الشركات لتحصل علي افضل سعر </title>
+
+</head>
+<body ng-controller="calCtrl">
+
+        <div id="headerwrap">
+          <img src="2.png" alt="قولي بكام" width="80" height="81">
+      	    <div class="container">
+      			<div class="row">
+      				<div class="col-lg-8 col-lg-offset-2">
+
+      					<h1>قولي بكام من برة</h1>
+                <h5>وفر فلوسك وقارن بين شركات التسوق الان </h5>
+                <h5>ابحث في امازون عن منتجك</h5>
+<a target="_blank" href="http://amzn.to/25f0jej"><img alt="Shop amazon" src="amazon.png" width="90px"></a>
+
+                <h6>وادخل فقط بيانات المنتج هنا </h6>
+      				</div>
+</div>
+      			</div>
+            <!-- /row -->
+
+            <div class="row">
+                <div class="col-lg-2 col-md-offset-5">
+                    <form class="form-inline" id="bkam">
+                        <div class="form-group">
+                          <h3>  <label for="form_ItemPrice">سعر القطعة</label></h3>
+                            <div class="input-group">
+                                <input type="number" pattern="[0-9]*" class="form-control" id="form_ItemPrice" placeholder="السعر" ng-change="showVals=false" ng-model="priceItem">
+                                <div class="input-group-addon">دولار</div>
+
+                            </div>
+                            </div>
+                        </div>
+                        <p></p>
+
+
+
+
+                        <div class="col-lg-2 col-md-offset-5">
+                        <div class="form-inline">
+                          <h3>  <label for="number" pattern="[0-9]*">الوزن</label></h3>
+                            <div class="input-group">
+                                <input type="number" pattern="[0-9]*" class="form-control" id="form_ItemWeight" placeholder="الوزن" ng-change="showVals=false" ng-model="weightItem">
+                                <div class="input-group-addon">كيلو جرام</div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-offset-5">
+                          <div class="form-group">
+                              <h3><label for="form_ItemType">نوع المنتج</label><h3>
+                                      <select class="form-control" name="form_ItemType" id="form_ItemType" ng-change="showVals=false" ng-model="valueItem" ng-options="x.type for x in dataItems">
+                                      </select>
+                        </div>
+                          </div>
+                    </form>
+                    <div class="col-lg-2 col-md-offset-5">
+                  <a href="#best"  role="button" ng-click="calculate(priceItem,weightItem,valueItem.type);showValues();" class="btn btn-lg btn-primary">قولي بكام</button></a>
+                </div>
+            </div>
+            <div class="home-header-brands-title">المقارنة الان بين:</div>
+            <div class="home-header-brands">
+                      <div class="home-header-brand"><img src="edfa3ly-logo-ar.png" width="137" height="40"></div>
+                      <div class="home-header-brand"><img src="lynks.png" width="80" height="81"></div>
+                      <div class="home-header-brand"><img src="SNS.png" width="100" height="81"></div>
+                      <div class="home-header-brand"><img src="fishisfast.png" width="80" height="81"></div>
+                      <div class="home-header-brand"><img src="hatolna.png" width="130" height="81"></div>
+
+                    </div>
+          </div>   
+<div id="best"></div>
+
+
+<section ng-if="showVals && priceItem!=null && priceItem>0">
+            <div class="row centered"><h1>نتيجة المقارنة</h1>
+            <div class="alert alert-info">
+                 <h4>We have found best prices from <strong>{{companiesArray[0].name}}</strong> in <strong>{{companiesArray[0].final | currency:"EGP&nbsp;" }}</strong></h4>
+            </div>
+</div>
+
+
+
+            <div class="container">
+
+            <div class="row">
+
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Logo</th>
+                                <th>الشركة</th>
+                                <th>الجمارك</th>
+                                <th>الضريبة</th>
+                                <th>العمولة</th>
+                                <th>الشحن</th>
+                                <th>التخليص</th>
+                                <th>الموافقات</th>
+                                <th>الاشتراك</th>
+                                <th>الدولار</th>
+                                <th>اجمالي السعر</th>
+
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="(key,compArr) in companiesArray">
+                            <td>
+                                <img width="50" height="50" ng-src="{{compArr.img}}">
+                            </td>
+                            <td>
+                                <h4>{{compArr.name}}</h4>
+                                <small>{{compArr.desc}}</small>
+                            </td>
+
+
+
+                            <!--   <td><button type="button" class="btn btn-danger">{{companiesArray[0].final | currency:"EGP&nbsp;" }}</button></td></td>-->
+                           <td>
+                                <span class="label label-primary"><strong>%{{compArr.custom | number:2}}</strong></span>
+                                <span class="label label-success"><strong>${{compArr.finalzcus | number:2}}</strong></span>
+
+
+                          </td>
+                            <td> <span class="label label-primary"><strong>%{{compArr.tax}}</strong></span>
+                                <span class="label label-success"><strong>${{compArr.finaltax | number:2}}</strong></span>
+                            </td>
+                            <td>
+                                <span class="label label-primary" ng-if="!feeCheck[key]"><strong>%{{compArr.fee}}</strong></span>
+                                <span class="label label-primary" ng-if="feeCheck[key]"><strong>{{compArr.fee | number:2}}</strong></span>
+                                <span class="label label-success"><strong>{{compArr.finalfee | number:2}}</strong></span>
+                            </td>
+                            <td> <span class="label label-primary"><strong>${{compArr.shipping}}</strong></span>
+                                <span class="label label-success"><strong>${{compArr.finalshpp | number:2}}</strong></span>
+
+                            </td>
+                            <td> <span class="label label-danger"><strong>${{compArr.clearsh}}</strong></span>
+                            </td>
+                            <td> <span class="label label-warning"><strong>{{compArr.customcheck}}</strong></span>
+                            </td>
+                            <td> <span class="label label-warning"><strong>EGP {{compArr.subsc}}</strong></span>
+                            </td>
+                            <td> <span class="label label-danger"><strong>EGP {{compArr.dollar}}</strong></span>
+                            </td>
+                            <td>
+                                <strong>{{compArr.final | number:0}}&nbsp;جنية</strong>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+  </div>
+	 <div id="service">
+     <div class="container">
+         <div class="row">
+           <h3 class="text-center">الأسئلة الشائعة<br><small><br></small></h3>
+             <div class="col-lg-6 col-md-offset-3">
+                 <!-- Nav tabs category -->
+                 <ul class="nav nav-tabs faq-cat-tabs">
+                     <li class="active"><a href="#faq-cat-1" data-toggle="tab">الشركات</a></li>
+                     <li><a href="#faq-cat-2" aligan=right data-toggle="tab">الجمارك</a></li>
+                     <li><a href="#faq-cat-3" aligan=right data-toggle="tab">الموافقات الجمركية</a></li>
+                 </ul>
+                 <!-- Tab panes -->
+                 <div class="tab-content faq-cat-content">
+                     <div class="tab-pane active in fade" id="faq-cat-1">
+                         <div class="panel-group" id="accordion-cat-1">
+                             <div class="panel panel-default panel-faq">
+                                 <div class="panel-heading">
+                                     <a data-toggle="collapse" data-parent="#accordion-cat-1" href="#faq-cat-1-sub-1">
+                                         <h4 class="panel-title"> ما هي افضل شركة؟<span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span> </h4> </a>
+                                 </div>
+                                 <div id="faq-cat-1-sub-1" class="panel-collapse collapse">
+                                     <div class="panel-body">
+
+                                        السؤال الأنسب ما هي أفضل شركة مناسبة لنوع السلعة
+
+                                         <p>
+
+
+هذا هو السبب انشاء هذه الإدة لحساب أفضل سعر والمتغير مع كل سلعة
+ وسيتم وضع مؤشر لأداء كل شركة في فترة زمنية محددة
+                                         </p>
+
+                                      </div>
+                                 </div>
+                             </div>
+                             <div class="panel panel-default panel-faq">
+                                 <div class="panel-heading">
+                                     <a data-toggle="collapse" data-parent="#accordion-cat-1" href="#faq-cat-1-sub-2">
+                                         <h4 class="panel-title">شركات الاشتراك ؟<span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span> </h4> </a>
+                                 </div>
+                                 <div id="faq-cat-1-sub-2" class="panel-collapse collapse">
+                                     <div class="panel-body">
+                                      شركات الاشتراك هي شركات تعطيك مميزات وخصومات مقابل اشترك
+                                         <p>
+                         موقع قولي يدعم هذة الشركات وموجودة بالمقارنة بجانب الشركات الاخري للمقارنة بافضل سعر والسعر النهائي للمنتج مضاف اليه الاشتراك
+
+
+                                         </p>
+
+
+
+
+
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="tab-pane fade" id="faq-cat-2">
+                         <div class="panel-group" id="accordion-cat-2">
+                             <div class="panel panel-default panel-faq">
+                                 <div class="panel-heading">
+                                     <a data-toggle="collapse" data-parent="#accordion-cat-2" href="#faq-cat-2-sub-1">
+                                         <h4 class="panel-title">التعريفة الجمركية <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span> </h4> </a>
+                                 </div>
+                                 <div id="faq-cat-2-sub-1" class="panel-collapse collapse">
+                                     <div class="panel-body">
+تتراوح التعريفة الجمركية في مصر من 5% الي 55%  من قيمة السلعة
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="panel panel-default panel-faq">
+                                 <div class="panel-heading">
+                                     <a data-toggle="collapse" data-parent="#accordion-cat-2" href="#faq-cat-2-sub-2">
+                                         <h4 class="panel-title">الضريبة علي الجمارك <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span> </h4> </a>
+                                 </div>
+                                 <div id="faq-cat-2-sub-2" class="panel-collapse collapse">
+                                     <div class="panel-body"> هي ضريبة يتم اضافتها بعد ان يتم اضافة نسبة الجمرك الي ثمن السلعة
+                                     <p>
+
+                                         مثال سلعة ثمنها 1000 جنية
+
+                                         </p>
+                                     <p>
+                                         جمركها 20% يعني 200 جنية
+                                         والضريبة 10%
+                                         بتساوي 120 جنية
+
+                                         </p>
+                                     ثمن السلعة النهائي هيكون
+
+                                     1200+120=1320 جنية
+
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="panel panel-default panel-faq">
+                                 <div class="panel-heading">
+                                     <a data-toggle="collapse" data-parent="#accordion-cat-2" href="#faq-cat-2-sub-3">
+                                         <h4 class="panel-title">تقيم الجمارك ؟ <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span> </h4> </a>
+                                 </div>
+                                 <div id="faq-cat-2-sub-3" class="panel-collapse collapse">
+                                     <div class="panel-body"> في بعض الاحيان يتم تجاهل الفاتورة المرفقة مع السلعه وتخضع لاعادة التقيم
+                                     <p>
+
+
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="tab-pane fade" id="faq-cat-3">
+                         <div class="panel-group" id="accordion-cat-3">
+                             <div class="panel panel-default panel-faq">
+                                 <div class="panel-heading">
+                                     <a data-toggle="collapse" data-parent="#accordion-cat-3" href="#faq-cat-3-sub-1">
+                                         <h4 class="panel-title">NTRA عرض الاتصالات ؟ <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span> </h4> </a>
+                                 </div>
+                                 <div id="faq-cat-3-sub-1" class="panel-collapse collapse">
+                                     <div class="panel-body">يتم عرض كل الأجهزة التي  تقوم باي نوع من أنواع الاتصال اللاسلكي وبعض الأجهزة الأخرى .
+
+                                    مثل الاجهزة التي تحتوي ايضا علي جي بي اس
+                                      والساعات الذكية
+                                      <br>
+لما توصل الشحنة الي مصر شركة الشحن هتكلمك هتعرض عليك انهم يخلصو الموفقة
+
+                                         او تقوم انت بالتخليص
+<br>
+
+                                         <strong>
+                                         خطوات التخليص
+</strong>
+<p>صورة من شهادة الجمرك</p>
+<p>
+بيانات السلعة او صورة من الكتالوج  </p>
+<p>
+الذهاب الي المركز القومي لتنظيم الاتصالات (5 شارع المخيم الدائم الحى السادس - مدينه نصر - القاهره )
+</p>
+<p>
+ستقوم بملي ورقة ببيانات الشحنة وارفاقها مع الورق الاخر وتتوجه للموظف المختص
+</p>
+<p>
+في خلال ساعة او ساعتين على الأكثر هتستلم  الافراج الجمركي علي الشحنة
+</p>
+العرض بدون اي رسوم
+</div>
+                                 </div>
+                             </div>
+                             <div class="panel panel-default panel-faq">
+                                 <div class="panel-heading">
+                                     <a data-toggle="collapse" data-parent="#accordion-cat-3" href="#faq-cat-3-sub-2">
+                                         <h4 class="panel-title"> عرض صيدليات ؟ <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span> </h4> </a>
+                                 </div>
+                                 <div id="faq-cat-3-sub-2" class="panel-collapse collapse">
+                                     <div class="panel-body">
+عرض صيدليات يتم علي السلع الاتية :
+
+<P>
+المكملات الغذائية
+</p>
+<P>
+ ادوات التجميل (احيانا
+    )
+</p>
+<P>
+جميع الأدوية
+</p>
+<P>
+ينصح بتوكيل شركة الشحن او شركة تخليص لهذا النوع من العروض
+</p>
+
+
+
+
+
+                                      </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+         </div>
+         <h3 class="text-center">لديك سؤال اخر<br><small> &nbsp;&nbsp;قم بأضافته في التعليقات او ارسله لنا هنا
+<br>
+<div class="fb-messengermessageus" messenger_app_id="1764870977093866" page_id="286370411694722" color="blue" size="standard" ></div>
+
+                </small></h3>
+     </div>
+    <br>
+
+    <div class="container">
+
+      <hr>
+      <div align="right">
+      <h4>&nbsp;التعليقات</h4></div>
+
+<div class="fb-comments" data-href="http://2olly.com" data-width="100%" data-colorscheme="light"   data-mobile="Auto-detected"   data-numposts="3"></div>  <div class="fb-save" data-uri="2olly.com" data-size="small"></div>
+ &nbsp;<div class="fb-send" data-href="https://www.facebook.com/2ollyy/"></div>
+
+ &nbsp;<div class="fb-follow" data-href="https://www.facebook.com/amr.genius" data-layout="button" data-show-faces="false"></div>
+
+ <div class="fb-share-button" data-href="http://2olly.com" data-layout="button" data-mobile-iframe="true"></div>&nbsp;&nbsp;<div class="fb-like" data-href="https://www.facebook.com/2ollyy/"  data-layout="standard" data-action="like"  data-mobile="Auto-detected" data-show-faces="false" data-share="false"></div>
+
+
+
+
+
+
+
+<div class="row centered">
+	 </div><! --/service -->
+</div>
+</div>
+    <div id="footerwrap">
+     <div class="container">
+       <div class="row">
+         <div class="col-lg-4">
+           <h4>عن قولي</h4>
+           <div class="hline-w"></div>
+           <p> قولي هي منصة لمقارنة اسعار الخدمات المختلفة.</p>
+         </div>
+         <div class="col-lg-4">
+           <h4>تابع صفحتنا علي الفيسبوك</h4>
+           <div class="hline-w"></div>
+           <p>
+
+             <div class="fb-page" data-href="https://www.facebook.com/2ollyy" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/2ollyy"><a href="https://www.facebook.com/2ollyy">2olly.com</a></blockquote></div></div>
+
+           </p>
+         </div>
+         <div class="col-lg-4">
+           <h4>اخر تحديث</h4>
+           <div class="hline-w"></div>
+             <p>23/May/2016 Beta 0.1</p>
+           
+           </p>
+         </div>
+       </div>
+     </div>
+<div class="row centered">
+    <p>Made with <span>❤</span> by <strong><a href="https://www.facebook.com/Amr.Genius">Amr Emad</a></strong>
+	 </div>
+    </div>
+
+<script src="az.js"></script>
+    <script src="ngprogress.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+    <script>
+    $(document).ready(function(){
+$('a[href^="#best"]').on('click',function (e) {
+  e.preventDefault();
+
+  var target = this.hash;
+  var $target = $(target);
+
+  $('html, body').stop().animate({
+      'scrollTop': $target.offset().top
+  }, 1300, 'swing', function () {
+      window.location.hash = target;
+  });
+});
+});
+    </script>
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1764870977093866";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '777658019038270');
+fbq('track', "PageView");
+fbq('track', 'ViewContent');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=777658019038270&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48536726-6', 'auto');
+  ga('require', 'BkamMnBara');
+  ga('send', 'pageview');
+
+</script>
+<script>
+     window.fbAsyncInit = function() {
+       FB.Event.subscribe(
+         'ad.loaded',
+         function(placementId) {
+           console.log('Audience Network ad loaded');
+           document.getElementById('ad_root').style.display = 'block';
+         }
+       );
+       FB.Event.subscribe(
+         'ad.error',
+         function(errorCode, errorMessage, placementId) {
+           console.log('Audience Network error (' + errorCode + ') ' + errorMessage);
+         }
+       );
+     };
+     (function(d, s, id) {
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) return;
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5&appId=1764870977093866";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+   </script>
+   <script>
+  $(document).ready(function() { $('.collapse').on('show.bs.collapse', function() { var id = $(this).attr('id'); $('a[href="#' + id + '"]').closest('.panel-heading').addClass('active-faq'); $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-minus"></i>'); }); $('.collapse').on('hide.bs.collapse', function() { var id = $(this).attr('id'); $('a[href="#' + id + '"]').closest('.panel-heading').removeClass('active-faq'); $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-plus"></i>'); }); });
+   </script>
+
+</body>
+</html>
